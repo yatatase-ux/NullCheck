@@ -13,16 +13,20 @@ class Sword : public Weapon
 
 class Player
 {
-    std::shared_ptr<Weapon> weapon;
+    std::shared_ptr<Weapon> weapon = nullptr;
     
 public:
     Player(std::shared_ptr<Weapon> weapon1) : weapon(std::move(weapon1)) 
     {
-		std::cout << weapon.use_count() << std::endl;
-        std::cout << weapon1.use_count() << std::endl;
     }
     /* いらない物は move で所有権を移し、無駄を減らす。
        こうすることで、メモリの使用効率が上がる*/
+
+    Player(std::shared_ptr<Sword> sword) : weapon(std::move(sword))
+    {
+        std::cout << weapon.use_count() << std::endl;
+        std::cout << sword.use_count() << std::endl;
+    }
 
     void Attack()
     {
